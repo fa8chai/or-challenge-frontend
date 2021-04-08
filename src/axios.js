@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const djangoUrl =''
+export const djangoUrl ='https://or-challenge.herokuapp.com'
 
 const axiosApi = axios.create({
   baseURL: djangoUrl,

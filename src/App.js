@@ -46,9 +46,12 @@ function App() {
               <Cart />
             </Route>
 
-            <Route path="/categories/:category">
+            {category&&
+             <Route path="/categories/:category">
               <CaProducts />
             </Route> 
+            }
+           
 
             <Route path="/products/:id">
               <ProductPage />

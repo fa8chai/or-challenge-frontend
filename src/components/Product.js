@@ -1,29 +1,33 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { addToCart, apiGetProduct, fetchPrice, remove, removeFromCart } from '../features/appSlice';
+import { addToCart, apiGetProduct, remove, removeFromCart } from '../features/appSlice';
 import CurrencyFormat from 'react-currency-format';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import { fetchPrice } from '../functions';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 
 function Product({ product, addToCartbtn, num }) {
     const dispatch = useDispatch();
     const currency = useSelector(state => state.app.currency);
-    const priceData = useSelector(state => state.app.priceData);
+    const [priceData, setPriceData] = useState(null);
       
     useEffect(() => {
-        const data = {
-            currency: currency,
-            product: product,
+        if(currency == product.price_currency){
+            setPriceData({
+                symbol: getSymbolFromCurrency(currency),
+                price: product.price,
+            })
+        }else{
+            fetchPrice(currency, product).then(res => setPriceData(res)).catch(err => console.log(err))
         }
-        dispatch(fetchPrice(data))
+        console.log(priceData);
     }, [currency, product])
     return (<ProductContainer>
-        {console.log(priceData)}
         <Link onClick={() => dispatch(apiGetProduct(product.id))} to={`/products/${product.id}`}>
             <img
                 alt={product.title}
@@ -35,7 +39,7 @@ function Product({ product, addToCartbtn, num }) {
                 {
                     priceData ? <CurrencyFormat value={priceData.price} displayType={'text'} thousandSeparator={true} prefix={priceData.symbol} />
                     :
-                    <CurrencyFormat value={product.price} displayType={'text'} thousandSeparator={true} prefix={getSymbolFromCurrency(product.price_currency)} />
+                    <CurrencyFormat value={product?.price} displayType={'text'} thousandSeparator={true} prefix={getSymbolFromCurrency(product?.price_currency)} />
                 }
             </p>
             </Link>
@@ -111,7 +115,7 @@ const ProductContainer = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 20px;
+        margin: 10px
     }
     > div > .num {
         color: purple;

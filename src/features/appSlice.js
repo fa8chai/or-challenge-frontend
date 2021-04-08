@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from '../axios';
 import { getMainCategories } from '../functions';
-import getSymbolFromCurrency from 'currency-symbol-map';
 
 export const appSlice = createSlice({
   name: 'app',
@@ -17,7 +16,6 @@ export const appSlice = createSlice({
     loading: false,
     loadingCategories: false,
     mainCategories: null,
-    priceData: null,
   },
   reducers: {
     setProducts: (state, action) => {
@@ -59,29 +57,12 @@ export const appSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
-    },
-    setPriceCurrency: (state, action) => {
-      state.priceData = action.payload
     }
   },
 });
 
-export const {setPriceCurrency, setCart, setUser, removeFromCart, setLoading, setCollapsed, addToCart, setProduct, setCategory, remove, setCurrency, setProducts, setCategories } = appSlice.actions;
+export const {setCart, setUser, removeFromCart, setLoading, setCollapsed, addToCart, setProduct, setCategory, remove, setCurrency, setProducts, setCategories } = appSlice.actions;
 
-export  const fetchPrice = (data) => dispatch => {
-  const BASE_URL = `https://free.currconv.com/api/v7/convert?q=${data.product.price_currency}_${data.currency}&compact=ultra&apiKey=8ebfadcff757e397a4ba`
-  const symbol = getSymbolFromCurrency(data.currency);
-  fetch(BASE_URL)
-      .then(res => res.json())
-      .then(jres => {
-          let e = jres[data.product.price_currency+'_'+data.currency]*data.product.price
-          dispatch(setPriceCurrency({
-            symbol: symbol,
-            price: e.toFixed(2),
-          }))
-      })
-      .catch(err => alert(err))
-}
 
 export const apiGetProducts = () => dispatch => {
   dispatch(setLoading(true))

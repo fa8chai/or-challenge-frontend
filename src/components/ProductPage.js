@@ -9,23 +9,30 @@ import CurrencyFormat from 'react-currency-format';
 import getSymbolFromCurrency from 'currency-symbol-map';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+import { fetchPrice } from '../functions';
 
 
 function ProductPage() {
     const loading = useSelector(state => state.app.loading);
     const product = useSelector(state => state.app.product);
-    const priceData = useSelector(state => state.app.priceData);
-
+    const currency = useSelector(state => state.app.currency);
+    const [priceData, setPriceData] = useState(null);
     const dispatch = useDispatch();
-    const [symbol, setSymbol] = useState('');
-    const [price, setPrice] = useState(null);
     const [images, setImages] = useState([]);
 
     useEffect(() => {
-        if (priceData) {
-            setSymbol(priceData.symbol);
-            setPrice(priceData.price);
+        if(currency == product.price_currency){
+            setPriceData({
+                symbol: getSymbolFromCurrency(currency),
+                price: product.price,
+            })
+        }else{
+            fetchPrice(currency, product).then(res => setPriceData(res)).catch(err => console.log(err))
         }
+        console.log(priceData);
+    }, [currency, product])
+
+    useEffect(() => {
         if (product) {
             let data = []
             product.images.forEach(image => {
@@ -37,7 +44,7 @@ function ProductPage() {
             setImages(data);
         }
         
-    }, [priceData, product])
+    }, [product])
 
     return (<ProductPageContainer>
         {loading ? 
@@ -52,7 +59,7 @@ function ProductPage() {
             <h4>{product?.desc}</h4>
             <p>  
                 {
-                    price ? <CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={symbol} />
+                    priceData ? <CurrencyFormat value={priceData.price} displayType={'text'} thousandSeparator={true} prefix={priceData.symbol} />
                     :
                     <CurrencyFormat value={product?.price} displayType={'text'} thousandSeparator={true} prefix={getSymbolFromCurrency(product?.price_currency)} />
                 }
