@@ -33,7 +33,7 @@ function Cart() {
         </ProductsContainer>
         {cart.length > 0 ? 
             <Subtotal>
-            <p>Subtotal ({ cart.length } items) : <strong>{`${getSymbolFromCurrency(currency)}${getCartTotal(cart)}`}</strong></p>
+            <p>Subtotal ({ cart.length } items) : <strong>{`$${getCartTotal(cart)}`}</strong></p>
             <Link to="/checkout"><Button>Proceed to Checkout</Button></Link>
             </Subtotal>
             :

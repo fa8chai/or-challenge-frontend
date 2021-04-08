@@ -12,9 +12,8 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { fetchPrice } from '../functions';
 
 
-function ProductPage() {
+function ProductPage({product}) {
     const loading = useSelector(state => state.app.loading);
-    const product = useSelector(state => state.app.product);
     const currency = useSelector(state => state.app.currency);
     const [priceData, setPriceData] = useState(null);
     const dispatch = useDispatch();

@@ -15,7 +15,7 @@ export const groupBy = (list, keyGetter) => {
 }
 
 export const fetchPrice = async (currency, product) => {
-    const BASE_URL = `https://free.currconv.com/api/v7/convert?q=${product.price_currency}_${currency}&compact=ultra&apiKey=8ebfadcff757e397a4ba`
+    const BASE_URL = `https://free.currconv.com/api/v7/convert?q=${product.price_currency}_${currency}&compact=ultra&apiKey=5dfaa5e9a6500761deda`
     const symbol = getSymbolFromCurrency(currency);
     const res = await fetch(BASE_URL)
     const pdata = await res.json()

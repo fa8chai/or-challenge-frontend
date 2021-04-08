@@ -24,6 +24,8 @@ import Products from './components/Products';
 
 function App() {
   const category = useSelector(state => state.app.category);
+  const product = useSelector(state => state.app.product);
+
   const products = useSelector(state => state.app.products);
   const cart = useSelector(state => state.app.cart);
   const user = useSelector(state => state.app.user);
@@ -52,10 +54,11 @@ function App() {
             </Route> 
             }
            
-
-            <Route path="/products/:id">
-              <ProductPage />
+              {product&&
+              <Route path="/products/:id">
+              <ProductPage product={product} />
             </Route>
+              }
 
             <Route path="/products">
               <CaProducts
