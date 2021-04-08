@@ -21,10 +21,10 @@ function ProductPage() {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
-        if(currency == product.price_currency){
+        if(currency == product?.price_currency){
             setPriceData({
                 symbol: getSymbolFromCurrency(currency),
-                price: product.price,
+                price: product?.price,
             })
         }else{
             fetchPrice(currency, product).then(res => setPriceData(res)).catch(err => console.log(err))
