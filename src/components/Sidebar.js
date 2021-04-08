@@ -9,7 +9,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
-import { apiGetCategory, setCollapsed, setCurrency } from '../features/appSlice';
+import { apiGetCategory, setCollapsed } from '../features/appSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -46,7 +46,7 @@ function Sidebar() {
     }
 
     return (<SidebarContainer>
-        <ProSidebar collapsedWidth={collapsed && '0'} breakPoint={!collapsed ? 'sm' : ''} toggled='true' collapsed={collapsed}>
+        <ProSidebar collapsedWidth={collapsed && '0'} breakPoint={!collapsed ? 'xl' : ''} toggled='true' collapsed={collapsed}>
             <SidebarHeader>
                 <SidebarHeaderContent>
                     <CurrencyContainer>

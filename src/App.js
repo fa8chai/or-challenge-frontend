@@ -89,6 +89,7 @@ const AppContainer = styled.div`
 `;
 const AppContainerFlex = styled.div`
   display: flex;
+  height: 100%;
 `;
 
 export default App;

@@ -1,4 +1,3 @@
-import getSymbolFromCurrency from 'currency-symbol-map';
 
 export const groupBy = (list, keyGetter) => {
     const map = new Map();

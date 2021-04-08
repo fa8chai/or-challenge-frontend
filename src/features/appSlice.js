@@ -47,7 +47,7 @@ export const appSlice = createSlice({
 
     },
     remove: (state, action) => {
-      var index = state.cart.findIndex(p => p.id == action.payload.id );
+      var index = state.cart.findIndex(p => p.id === action.payload.id );
       state.cart.splice(index, 1); 
 
     },
